@@ -7,7 +7,8 @@ chroma_client = chromadb.PersistentClient(path = ROOT / "data" / "chroma_db")
 COLLECTIONS = {
     "10th": [
         "wh40k_core_rules_10th",
-        "wh40k_stratagems_10th"
+        "wh40k_stratagems_10th",
+        "wh40k_abilities_10th"
     ],
     "11th": []
 }
@@ -39,6 +40,23 @@ CORE_RULES_KEYWORDS = {
     "wounds",
     "damage"
 }
+ABILITY_KEYWORDS = {
+    # Direct ability name queries
+    'ability', 'abilities', 'rule', 'special rule',
+    # Common ability names that appear in the data
+    'synapse', 'deep strike', 'feel no pain', 'deadly demise',
+    'lone operative', 'stealth', 'infiltrate', 'scout',
+    'leader', 'fights first', 'hover', 'reanimation',
+    'oath of moment', 'dark pacts', 'acts of faith',
+    'strands of fate', 'for the greater good',
+    'battle focus', 'power from pain', 'harbingers',
+    'blessings of khorne', 'waaagh', 'doctrina',
+    'martial katah', 'voice of command', 'gate of infinity',
+    # Mechanic keywords that imply ability lookups
+    'aura', 'psychic', 'ritual', 'miracle dice', 'fate dice',
+    'pain token', 'dread', 'bondsman', 'invulnerable save',
+    'battle shock', 'objective control'
+}
 
 # Build this once when the module loads
 NAME_CACHE = {}
@@ -67,6 +85,8 @@ def determine_collections(question, edition):
         collections.append(f"wh40k_stratagems_{edition}")
     if any(keyword in q for keyword in CORE_RULES_KEYWORDS):
         collections.append(f"wh40k_core_rules_{edition}")
+    if any(keyword in q for keyword in ABILITY_KEYWORDS):
+        collections.append(f"wh40k_abilities_{edition}")
     if not collections:
         collections = COLLECTIONS.get(edition, [])
     
