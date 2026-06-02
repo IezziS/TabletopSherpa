@@ -1,6 +1,9 @@
 
 def run_ingestion(collection_name, documents, metadatas, ids, chroma_client):
-    collection = chroma_client.delete_collection(name=collection_name)
+    try: 
+        collection = chroma_client.delete_collection(name=collection_name)
+    except:
+        pass
     collection = chroma_client.get_or_create_collection(name=collection_name)
     
     existing = collection.get()

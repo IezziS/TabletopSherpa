@@ -8,7 +8,8 @@ COLLECTIONS = {
     "10th": [
         "wh40k_core_rules_10th",
         "wh40k_stratagems_10th",
-        "wh40k_abilities_10th"
+        "wh40k_abilities_10th",
+        'wh40k_datasheets_10th'
     ],
     "11th": []
 }
@@ -36,9 +37,6 @@ CORE_RULES_KEYWORDS = {
     "advance",
     "sequence",
     "allocate",
-    "saves",
-    "wounds",
-    "damage"
 }
 ABILITY_KEYWORDS = {
     # Direct ability name queries
@@ -57,7 +55,24 @@ ABILITY_KEYWORDS = {
     'pain token', 'dread', 'bondsman', 'invulnerable save',
     'battle shock', 'objective control'
 }
+DATASHEETS_KEYWORDS = {
+    'datasheet', 'statline', 'stats', 'profile', 'characteristic',
+    'unit', 'model', 'squad', 'warband', 'army list',
+    'toughness', 'movement', 'save', 'wounds', 'leadership', 
+    'objective control', 'invulnerable', 'armour', 'oc',
+    'strength', 'attacks', 'skill', 'ballistic', 'weapon skill',
+    'wargear', 'loadout', 'equipped', 'weapon', 'melee', 'ranged',
+    'gun', 'sword', 'rifle', 'bolter', 'cannon', 'missile',
+    'replace', 'swap', 'option', 'upgrade',
+    'composition', 'how many models', 'squad size', 'minimum', 
+    'maximum', 'points', 'pts',
+    'keyword', 'infantry', 'vehicle', 'character', 'monster',
+    'fly', 'transport', 'battleline', 'epic hero', 'titanic',
+    'lead', 'attach', 'bodyguard', 'leader', 'character',
+    'how many', 'can i take',
+    'what weapons', 'what abilities', 'how tough', 'how fast'
 
+}
 # Build this once when the module loads
 NAME_CACHE = {}
 
@@ -87,6 +102,8 @@ def determine_collections(question, edition):
         collections.append(f"wh40k_core_rules_{edition}")
     if any(keyword in q for keyword in ABILITY_KEYWORDS):
         collections.append(f"wh40k_abilities_{edition}")
+    if any(keyword in q for keyword in DATASHEETS_KEYWORDS):
+        collections.append(f"wh40k_datasheets_{edition}")
     if not collections:
         collections = COLLECTIONS.get(edition, [])
     
@@ -95,16 +112,31 @@ def determine_collections(question, edition):
 def find_exact_matches(question, collection, collection_name, edition):
     names = NAME_CACHE.get(edition, {}).get(collection_name, {})
     question_upper = question.upper()
-    matches = [
-        original_name
-        for upper_name, original_name in names.items()
-        if upper_name in question_upper
-    ]
+    question_words = set(question_upper.split())
+    
+    matches = []
+    for upper_name, original_name in names.items():
+        name_words = set(upper_name.split())
+        # Check if all words in the unit name appear in the question
+        # OR if all question content words appear in the unit name
+        if name_words.issubset(question_words) or \
+           any(word in question_upper for word in name_words if len(word) > 4):
+            matches.append(original_name)
+    
     
     if matches:
-        best_match = max(matches, key=len)
-        results = collection.get(where={"name": best_match})
-        return results['documents'], results['metadatas'], results['ids']
+        all_results_docs = []
+        all_results_metas = []
+        all_results_ids = []
+        
+        for match in matches:
+            results = collection.get(where={"name": match})
+            if results['documents']:
+                all_results_docs.extend(results['documents'])
+                all_results_metas.extend(results['metadatas'])
+                all_results_ids.extend(results['ids'])
+        
+        return all_results_docs, all_results_metas, all_results_ids
     
     return None, None, None
 
@@ -121,6 +153,8 @@ def query_collection(question, collection_name, edition, n_results):
                     all_documents.append(doc)
                     all_metadatas.append(meta)
                     seen_ids.add(id)
+            return all_documents, all_metadatas, list(seen_ids)
+
         #semantic search
         semantic_results = collection.query(
             query_texts=[question],
@@ -157,3 +191,5 @@ def query_router(question, edition, n_results):
         
 
 build_name_cache()
+
+

@@ -20,6 +20,7 @@ def ask_rules_lawyer(question):
     - summarize rules in your own words
     - help teach gameplay flow and timing
     - stay grounded ONLY in the provided rules context
+    - Examples can only be used if they are directly supported by the rules context, do not extrapolate.
     State whether each answer is:
     - directly supported by rules context: use language like: 'The rules state that...', 'According to the rules...', 'The text says...'
     - inferred from gameplay procedure 
@@ -64,6 +65,6 @@ question = "When rolling saving throws, on a unit where models have different ar
 print(question)
 print(ask_rules_lawyer(question))
 
-question = "I'm in the shooting phase, what stratagems can I use of my space marine infantry unit?"
+question = "What is the wounds characteristic of a space marine intercessor?"
 print(question)
 print(ask_rules_lawyer(question))
