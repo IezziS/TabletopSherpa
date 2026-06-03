@@ -2,7 +2,8 @@
 def run_ingestion(collection_name, documents, metadatas, ids, chroma_client):
     try: 
         collection = chroma_client.delete_collection(name=collection_name)
-    except:
+    except Exception as e:
+        print(f"Error deleting collection {collection_name} : {e}")
         pass
     collection = chroma_client.get_or_create_collection(name=collection_name)
     
