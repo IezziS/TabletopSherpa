@@ -7,6 +7,9 @@ ROOT = Path(__file__).parent.parent
 
 
 def ask_rules_lawyer(question):
+    if (question.find('Tau') != -1): #probably a stupid check, but most people will write Tau, while offical spelling is T'au
+        question = question.replace('Tau', 'T’au')
+        
     documents, metadatas = query_router(question, edition = "10th", n_results = 5)
 
     context = "\n---\n".join(documents)
@@ -17,6 +20,7 @@ def ask_rules_lawyer(question):
     - summarize rules in your own words
     - help teach gameplay flow and timing
     - stay grounded ONLY in the provided rules context
+    - Examples can only be used if they are directly supported by the rules context, do not extrapolate.
     State whether each answer is:
     - directly supported by rules context: use language like: 'The rules state that...', 'According to the rules...', 'The text says...'
     - inferred from gameplay procedure 
@@ -53,11 +57,14 @@ def ask_rules_lawyer(question):
 question = "What is the CP cost for a command re-roll? What can i use it on?"
 print(question)
 print(ask_rules_lawyer(question))
-question = "What is the CP cost to use the COUNTER-OFFENSIVE stratagem? and when do I use it?"
+question = "What does oath of moment do?"
 print(question)
 print(ask_rules_lawyer(question))
 
-question = "When rolling saving throws, on a unit that has multiple saves, do you roll all the saves at once or one at a time?"
+question = "When rolling saving throws, on a unit where models have different armor saves , do you roll all the saves at once or one at a time? Is there a fast rolling method for this?"
 print(question)
 print(ask_rules_lawyer(question))
 
+question = "What is the wounds characteristic of a space marine intercessor?"
+print(question)
+print(ask_rules_lawyer(question))
