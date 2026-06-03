@@ -3,6 +3,7 @@ from pathlib import Path
 from backend.ingestion.ingest_stratagems import ingest_stratagems
 from backend.ingestion.ingest_abilities import ingest_abilities
 from backend.ingestion.ingest_datasheets import ingest_datasheets
+from backend.ingestion.ingest_detachments import ingest_detachments
 
 
 
@@ -13,3 +14,4 @@ if __name__ == "__main__":
     ingest_stratagems("stratagems.csv", "10th",chroma_client)
     ingest_abilities("abilities.csv", "10th",chroma_client)
     ingest_datasheets("10th", chroma_client)
+    ingest_detachments("10th", chroma_client)
