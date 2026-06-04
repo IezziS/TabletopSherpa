@@ -1,15 +1,21 @@
 import chromadb
+from chromadb.utils.embedding_functions import OllamaEmbeddingFunction
 from pathlib import Path
 
 ROOT = Path(__file__).parent.parent.parent
-chroma_client = chromadb.PersistentClient(path = ROOT / "data" / "chroma_db")
+chroma_client = chromadb.PersistentClient(path=str(ROOT / "data" / "chroma_db"))
 
+embedding_fn = OllamaEmbeddingFunction(
+    model_name="nomic-embed-text",
+    url="http://localhost:11434/api/embeddings"
+)
 COLLECTIONS = {
     "10th": [
         "wh40k_core_rules_10th",
         "wh40k_stratagems_10th",
         "wh40k_abilities_10th",
-        'wh40k_datasheets_10th'
+        'wh40k_datasheets_10th',
+        'wh40k_detachments_10th'
     ],
     "11th": []
 }
@@ -73,15 +79,23 @@ DATASHEETS_KEYWORDS = {
     'what weapons', 'what abilities', 'how tough', 'how fast'
 
 }
+DETACHMENTS_KEYWORDS = {
+    'Detachments', 'Detachment', 'Detachment ability'
+    ,'Ability', 'sub faction', 'enhancements'
+}
+
 # Build this once when the module loads
 NAME_CACHE = {}
+
+def get_collection(name):
+    return chroma_client.get_or_create_collection(name = name,embedding_function=embedding_fn)
 
 def build_name_cache():
     for edition, collections in COLLECTIONS.items():
         NAME_CACHE[edition] = {}
         for collection_name in collections:
             try:
-                collection = chroma_client.get_collection(name=collection_name)
+                collection = get_collection(name=collection_name)
                 all_meta = collection.get()['metadatas']
                 NAME_CACHE[edition][collection_name] = {
                     m['name'].upper(): m["name"]
@@ -145,7 +159,7 @@ def query_collection(question, collection_name, edition, n_results):
     all_metadatas = []
     seen_ids = set()
     try:
-        collection = chroma_client.get_or_create_collection(name=collection_name)
+        collection = get_collection(name=collection_name)
         docs, metas, ids = find_exact_matches(question, collection, collection_name, edition)
         if docs:
             for doc, meta, id in zip(docs, metas, ids):

@@ -99,10 +99,10 @@ def format_models(datasheet_id, statline):
             invul = rows['inv_sv']
             invul_Cond = rows['inv_sv_descr'] if pd.notna(rows['inv_sv_descr']) else ''
         model = (
-            f"\t{rows['name']}: "
-            f"Movement (M):{rows['M']} Toughness (T):{rows['T']} Armor Save (Sv):{rows['Sv']} "
-            f"Wounds (W):{rows['W']} Invulnerable Save: {invul} {invul_Cond} "
-            f"Leadership (Ld):{rows['Ld']} Objective Control (OC):{rows['OC']}"
+            f"\t- {rows['name']}: "
+            f"Movement (M):{rows['M']} | Toughness (T):{rows['T']} | Armor Save (Sv):{rows['Sv']} | "
+            f"Wounds (W):{rows['W']} | Invulnerable Save: {invul} {invul_Cond} | "
+            f"Leadership (Ld):{rows['Ld']} | Objective Control (OC):{rows['OC']} |"
             ).strip()
         statlines.append(model)
     return '\n'.join(statlines)
@@ -134,13 +134,13 @@ def format_wargear(datasheet_id, wargear):
             if dice == False:
                 wargear_list.append(f"Roll a dice to determine which statline is used for weapons contain Dice stat:")
                 dice = True
-            wargear_list.append(f"\t{row['name']} Dice: {row['dice']} Keywords: {row['description']} Range: {row['range']} "
-                                f"Type: {row['type']} Attacks (A): {row['A']} BS or WS: {row['BS_WS']} Strength (S): {row['S']} "
-                                f"AP: {row['AP']} Damage (D): {row['D']}")
+            wargear_list.append(f"\t{row['name']} - Dice: {row['dice']} | Keywords: {row['description']} | Range: {row['range']} | "
+                                f"Type: {row['type']} | Attacks (A): {row['A']} | BS or WS: {row['BS_WS']} | Strength (S): {row['S']} | "
+                                f"AP: {row['AP']} | Damage (D): {row['D']}")
         elif pd.notna(row['name']):
-            wargear_list.append(f"\t{row['name']} Keywords: {row['description']} Range: {row['range']} "
-                                f"Type: {row['type']} Attacks (A): {row['A']} BS or WS: {row['BS_WS']} Strength (S): {row['S']} "
-                                f"AP: {row['AP']} Damage (D): {row['D']}")
+            wargear_list.append(f"\t{row['name']} - Keywords: {row['description']} | Range: {row['range']} | " 
+                                f"Type: {row['type']} | Attacks (A): {row['A']} | BS or WS: {row['BS_WS']} | Strength (S): {row['S']} | "
+                                f"AP: {row['AP']} | Damage (D): {row['D']}")
     return '\n'.join(wargear_list)
 
 def cleaner_helper(sheets):
@@ -213,8 +213,8 @@ ABILITIES: \n {row_abilities}"""
             document += f"\nLEADER INFO:\n {row_leader}"
         document += f"""\nMODELS:\n{row_models}
 MODEL COSTS: \n{row_model_cost}
-WARGEAR OPTIONS: \n{row_options}
-WARGEAR STATS: \n {row_wargear}
+WEAPON OPTIONS: \n{row_options}
+WEAPON STATS: \n {row_wargear}
         """
             
         documents.append(document)

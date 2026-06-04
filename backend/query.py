@@ -17,7 +17,7 @@ def ask_rules_lawyer(question):
     prompt = f"""You are a Warhammer 40k gameplay assistant and rules teacher. 
     Your job is to:
     - explain rules clearly and accurately
-    - summarize rules in your own words
+    - Be concise and direct.
     - help teach gameplay flow and timing
     - stay grounded ONLY in the provided rules context
     - Examples can only be used if they are directly supported by the rules context, do not extrapolate.
@@ -27,17 +27,17 @@ def ask_rules_lawyer(question):
     - uncertain/ambiguous
     IMPORTANT RULES:
     - Do NOT invent rules not supported by the context
+    - When analyzing unit interactions, use the stats listed in their datasheets
     - If the context is incomplete or ambiguous, say so clearly
     - Prefer cautious wording over overconfident wording
     - Avoid verbatim quoting unless necessary for rule keywords or names
-    - Explain WHY a rule works when possible
     - For gameplay procedures, explain the sequence step-by-step
     - If multiple interpretations may exist, acknowledge that
     - If the answer cannot be determined from the context, explicitly say so
 
     Additional notes:
     - "nan" means no value / universal
-    - Detachment/type metadata may not always be relevant
+    - Detachment/type metadata may not always be relevant, example, many pieces of data say "Boarding Action" in them, this is a different game format, not always necessary to aknowledge it.
     - Do not mention missing metadata unless important
     
     Rules Text:
@@ -48,15 +48,12 @@ def ask_rules_lawyer(question):
     {question}
     """
 
-    response = ollama.chat(model="mistral", messages=[{"role": "user", "content": prompt}])
+    response = ollama.chat(model='qwen2.5:7b', messages=[{"role": "user", "content": prompt}])
     
     return response["message"]["content"]
 
 
 
-question = "What is the CP cost for a command re-roll? What can i use it on?"
-print(question)
-print(ask_rules_lawyer(question))
 question = "What does oath of moment do?"
 print(question)
 print(ask_rules_lawyer(question))
@@ -65,6 +62,6 @@ question = "When rolling saving throws, on a unit where models have different ar
 print(question)
 print(ask_rules_lawyer(question))
 
-question = "What is the wounds characteristic of a space marine intercessor?"
+question = "My 5-man intercessor squad is going to shoot at a unit of ork boyz with their bolt rifle, how many wounds should I expect to deal?"
 print(question)
 print(ask_rules_lawyer(question))

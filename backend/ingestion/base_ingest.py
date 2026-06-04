@@ -1,3 +1,5 @@
+from backend.util.chroma_utils import get_collection
+
 
 def run_ingestion(collection_name, documents, metadatas, ids, chroma_client):
     try: 
@@ -5,7 +7,7 @@ def run_ingestion(collection_name, documents, metadatas, ids, chroma_client):
     except Exception as e:
         print(f"Error deleting collection {collection_name} : {e}")
         pass
-    collection = chroma_client.get_or_create_collection(name=collection_name)
+    collection = get_collection(collection_name)
     
     existing = collection.get()
     if existing['ids']:
