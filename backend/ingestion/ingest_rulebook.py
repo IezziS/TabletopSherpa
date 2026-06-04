@@ -1,12 +1,19 @@
 from pypdf import PdfReader
 from pathlib import Path
+from chromadb.utils.embedding_functions import OllamaEmbeddingFunction
+
 import chromadb
 
+
+embedding_fn = OllamaEmbeddingFunction(
+    model_name="nomic-embed-text",
+    url="http://localhost:11434/api/embeddings"
+)
 ROOT = Path(__file__).parent.parent.parent
 pdf_path_10thed = ROOT / "data"/ "rules" / "wh40kcorerules10th.pdf"
 
 chroma_client = chromadb.PersistentClient(path = ROOT / "data"/"chroma_db")
-collection = chroma_client.get_or_create_collection(name="wh40k_core_rules_10th")
+collection = chroma_client.get_or_create_collection(name="wh40k_core_rules_10th", embedding_function= embedding_fn)
 
 reader = PdfReader(pdf_path_10thed)
 pages = []
