@@ -6,11 +6,11 @@ ROOT = Path(__file__).parent.parent
 
 
 
-def ask_rules_lawyer(question):
+def ask_rules_lawyer(question, edition):
     if (question.find('Tau') != -1): #probably a stupid check, but most people will write Tau, while offical spelling is T'au
         question = question.replace('Tau', 'T’au')
         
-    documents, metadatas = query_router(question, edition = "10th", n_results = 5)
+    documents, metadatas = query_router(question, edition, n_results = 5)
 
     context = "\n---\n".join(documents)
     
@@ -53,15 +53,15 @@ def ask_rules_lawyer(question):
     return response["message"]["content"]
 
 
+if __name__ == '__main__':
+    question = "What does oath of moment do?"
+    print(question)
+    print(ask_rules_lawyer(question , "10th"))
 
-question = "What does oath of moment do?"
-print(question)
-print(ask_rules_lawyer(question))
+    question = "When rolling saving throws, on a unit where models have different armor saves , do you roll all the saves at once or one at a time? Is there a fast rolling method for this?"
+    print(question)
+    print(ask_rules_lawyer(question , "10th"))
 
-question = "When rolling saving throws, on a unit where models have different armor saves , do you roll all the saves at once or one at a time? Is there a fast rolling method for this?"
-print(question)
-print(ask_rules_lawyer(question))
-
-question = "My 5-man intercessor squad is going to shoot at a unit of ork boyz with their bolt rifle, how many wounds should I expect to deal?"
-print(question)
-print(ask_rules_lawyer(question))
+    question = "My 5-man intercessor squad is going to shoot at a unit of ork boyz with their bolt rifle, how many wounds should I expect to deal?"
+    print(question)
+    print(ask_rules_lawyer(question, "10th"))

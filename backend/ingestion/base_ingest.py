@@ -25,5 +25,5 @@ def run_ingestion(collection_name, documents, metadatas, ids, chroma_client):
             ids=batch_ids
         )
     print(f"Ingested {len(documents)} documents into collection {collection_name}")
-
+    
     
