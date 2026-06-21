@@ -1,0 +1,74 @@
+/* themes.css */
+[class^="theme-"] {
+  min-height: 100vh;
+  background-color: var(--color-bg);
+  background-image:linear-gradient(var(--color-bg-shift-a), var(--color-bg-shift-b)), var(--texture);
+  background-repeat: repeat;
+  background-size: cover;
+  position: relative;
+  color: var(--color-text);
+  font-family: var(--font-display);
+}
+
+.theme-wh40k {
+  --font-display: 'OCR A Std', monospace;
+  --color-text: #58ab48;
+  --color-text-shadow:rgba(51, 255, 51, 0.6);
+  --color-bg: #162916;
+  --color-accent: #172415;
+  --color-bg-shift-a: #061306d9;
+  --color-bg-shift-b:#162916d9;
+  --texture: url(./assets/textures/Scanlines.png);
+  --texture2: url(./assets/textures.Scanlines2.png);
+}
+.theme-button-wh40k {
+    --font-display: 'OCR A Std', monospace;
+  --color-text: #58ab48;
+  --color-text-shadow:rgba(51, 255, 51, 0.6);
+  --color-bg: #162916;
+  --color-accent: #172415;
+  --color-bg-shift-a: #061306d9;
+  --color-bg-shift-b:#162916d9;
+  --texture: url(./assets/textures/Scanlines.png);
+  
+}
+.theme-wh40k::before {
+    content: '';
+    position: absolute;
+    inset:0;
+    background-image:linear-gradient(var(--color-bg-shift-a), var(--color-bg-shift-b)), var(--texture);
+    background-repeat: repeat;
+    background-size: cover;
+    opacity: 0.25;
+    pointer-events: none;
+    z-index: 0;
+    animation: scanroll 16s linear infinite;
+}
+@keyframes scanroll {
+    from {background-position: 10px 10px;}
+    to {background-position: 0 2000px;}
+}
+
+.theme-mtg {
+  --font-display: 'Luminari', serif;
+  --color-text: #4b3a05;
+  --color-text-shadow:rgba(209, 68, 12, 0.719);
+  --color-bg: #d4c5b6;
+  --color-accent: #c4a98e;
+  
+  --color-bg-shift-a: #868354a9;
+  --color-bg-shift-b:#c7b7a2d9;
+  --texture: url(./assets/textures/parchment.png);
+  --texture2: url(./assets/textures/parchment2.png)
+}
+.theme-button-mtg {
+    --font-display: 'Luminari', serif;
+  --color-text: #4b3a05;
+  --color-text-shadow:rgba(209, 68, 12, 0.719);
+  --color-bg: #d4c5b6;
+  --color-accent: #c4a98e;
+  
+  --color-bg-shift-a: #6d613ba9;
+  --color-bg-shift-b:#c7b7a2d9;
+  --texture: url(./assets/textures/parchment.png);
+}

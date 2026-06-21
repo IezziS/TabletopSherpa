@@ -1,0 +1,9 @@
+.nameplate {
+    color:var(--color-text);
+    text-shadow: 0 0 8px var(--color-text-shadow);
+    font-family: var(--font-display);
+}
+
+.thinking{
+    text-shadow: 0 0 8px var(--color-text-shadow);
+}

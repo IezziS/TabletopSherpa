@@ -1,0 +1,48 @@
+.messagelist-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background: color 0;
+  padding: 0 16px;
+  
+  height: 80%;
+}
+
+.messagelist-user {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.messagelist-sherpa {
+  display: flex;
+  justify-content: flex-start;
+  
+}
+
+.messagelist-bubble-user {
+  padding: 10px 14px;
+  border-radius: 25px;
+  max-width: 75%;
+  background-color:var(--color-accent);
+  font-family: var(--font-display);
+  color: var(--color-text);
+  background-image:linear-gradient(var(--color-bg-shift-a), var(--color-bg-shift-b)), var(--texture);
+  text-shadow: 0 0 4px var(--color-text-shadow);
+  box-shadow: 3px 3px 5px #000;  /* offset solid "shadow" */
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+.messagelist-bubble-sherpa {
+  padding: 10px 14px;
+  border-radius: 25px;
+  max-width: 75%;
+  font-family: OCR A Std, monospace;
+  background-color:var(--color-accent);
+  font-family: var(--font-display);
+  color: var(--color-text);
+  background-image:linear-gradient(var(--color-bg-shift-a), var(--color-bg-shift-b)), var(--texture);
+  text-shadow: 0 0 4px var(--color-text-shadow);
+  box-shadow: -3px 3px 5px #000; 
+  word-break: break-word;
+  overflow-wrap: break-word; /* offset solid "shadow" */
+}

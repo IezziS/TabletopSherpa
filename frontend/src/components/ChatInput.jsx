@@ -1,4 +1,6 @@
 import { useState } from "react";
+import '../styles/ChatInput.css'
+
 
 
 function ChatInput({onSend , disabled}) {
@@ -14,8 +16,9 @@ function ChatInput({onSend , disabled}) {
 
     }
     return (
-        <div>
+        <div className="chat-input-bubble">
             <input
+                className="inputfield"
                 type = "text"
                 value = {inputValue}
                 onChange = {(e) => setInputValue(e.target.value)}
@@ -23,7 +26,7 @@ function ChatInput({onSend , disabled}) {
                 disabled={disabled}
                 placeholder = "Ask about rules..."
             />
-            <button onClick= {handleSend}>Send</button>
+            <button className="send-it" onClick= {handleSend}>Send</button>
         </div>
     )
 }
