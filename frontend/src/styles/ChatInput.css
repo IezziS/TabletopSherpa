@@ -1,0 +1,35 @@
+.chat-input-bubble {
+    padding: 10px 10px;
+    border-radius: 8px;
+    color: #999;
+    width: 70%;
+    position: fixed;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.inputfield{
+    padding: 10px 10px;
+    width: 90%;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+
+    background-color:var(--color-accent);
+    font-family: var(--font-display);
+    color: var(--color-text);
+    background-image:linear-gradient(var(--color-bg-shift-a), var(--color-bg-shift-b)), var(--texture);
+    text-shadow: 0 0 4px var(--color-text-shadow);
+}
+.send-it {
+     padding: 10px 10px;
+    
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    background-color:var(--color-accent);
+    font-family: var(--font-display);
+    color: var(--color-text);
+    background-image:linear-gradient(var(--color-bg-shift-a), var(--color-bg-shift-b)), var(--texture);
+
+
+    text-shadow: 0 0 4px var(--color-text-shadow);
+}

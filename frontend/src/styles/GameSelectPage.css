@@ -1,0 +1,27 @@
+.gameselect-button {
+    padding: 10px 10px;
+    margin: 10px;
+    color: var(--color-text);
+    background-image:linear-gradient(var(--color-bg-shift-a), var(--color-bg-shift-b)), var(--texture);
+    text-shadow: 0 0 4px var(--color-text-shadow);
+    box-shadow: 3px 3px 5px #000;
+    font-family: var(--font-display);
+    
+}
+.confirm-select {
+    padding: 10px 25px;
+    margin: 10px;
+
+}
+.edition-selector{
+    
+    width: 300px;
+    text-align: center;
+    padding: 5px 40px;
+    margin: 10px;
+    font-family: var(--font-display);
+    background-image:linear-gradient(var(--color-bg-shift-a), var(--color-bg-shift-b)), var(--texture);
+    color: var(--color-text);
+    text-shadow: 0 0 4px var(--color-text-shadow);
+
+}
